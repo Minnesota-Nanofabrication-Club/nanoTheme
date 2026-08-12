@@ -1,0 +1,172 @@
+/* =========================================================
+   ASIC Network reskin, layered on top of mdBook's default
+   theme via additional-css. See theme/head.hbs, header.hbs
+   and asic-network.js for the other override points.
+   ========================================================= */
+
+:root{
+  --an-maroon:#7a0019;
+  --an-maroon-2:#5b0013;
+  --an-gold:#ffcc33;
+  --an-ink:#222222;
+  --an-soft:#fff8e3;
+  --an-trace:#eedfa0;
+  --an-line:#e5e0d8;
+  --an-bg:#faf8f5;
+  --an-bg-alt:#f5f1ea;
+  --an-text:#333333;
+  --an-muted:#666666;
+  --an-font:Georgia,'Times New Roman',serif;
+  --an-ui-font:Verdana,Arial,sans-serif;
+  --an-mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  /* remap mdBook's own theme variables onto the palette above so
+     every stock element (tables, links, sidebar, code) inherits it
+     without needing a per-selector override */
+  --sidebar-target-width: 248px;
+  --page-padding: 20px;
+  --content-max-width: 760px;
+  --menu-bar-height: 64px;
+  --mono-font: var(--an-mono);
+
+  --bg: var(--an-bg);
+  --fg: var(--an-text);
+  --sidebar-bg: #ffffff;
+  --sidebar-fg: var(--an-text);
+  --sidebar-non-existant: var(--an-muted);
+  --sidebar-active: var(--an-maroon);
+  --sidebar-spacer: var(--an-line);
+  --scrollbar: var(--an-trace);
+  --icons: var(--an-muted);
+  --icons-hover: var(--an-maroon);
+  --links: var(--an-maroon);
+  --inline-code-color: var(--an-maroon-2);
+  --theme-popup-bg: #ffffff;
+  --theme-popup-border: var(--an-line);
+  --theme-hover: var(--an-bg-alt);
+  --quote-bg: var(--an-soft);
+  --quote-border: var(--an-gold);
+  --table-border-color: var(--an-line);
+  --table-header-bg: var(--an-maroon);
+  --table-alternate-bg: var(--an-bg-alt);
+  --color-scheme: light;
+}
+
+html, body{
+  font-family: var(--an-font);
+  -webkit-font-smoothing: antialiased;
+}
+#mdbook-content code, pre, .sidebar, .menu-title{
+  font-family: var(--an-mono);
+}
+
+/* hide the theme picker: this design is single (light) themed only,
+   switching to mdBook's built-in navy/coal/ayu themes would only
+   partially apply since this stylesheet hardcodes colors on top */
+#mdbook-theme-toggle{ display:none; }
+
+/* ---------- injected brand header (theme/header.hbs) ---------- */
+.an-nav{position:sticky;top:0;z-index:120;background:var(--an-maroon);border-bottom:4px solid var(--an-gold)}
+.an-row{max-width:1200px;margin:0 auto;padding:0 clamp(18px,4vw,32px);display:flex;align-items:center;gap:18px;height:64px}
+.an-brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:auto}
+.an-brand:hover .an-chip{transform:rotate(45deg)}
+.an-chip{flex:none;transition:transform .3s ease}
+.an-pins{stroke:#fff;stroke-width:2;stroke-linecap:round;fill:none}
+.an-body{fill:var(--an-gold)}
+.an-core{fill:var(--an-maroon-2);opacity:.92}
+.an-wm{font-weight:700;font-size:1.6rem;letter-spacing:.02em;color:#ffffff;line-height:1.15;display:block}
+.an-sub{font-family:var(--an-ui-font);font-size:.896rem;letter-spacing:.06em;color:var(--an-gold);font-style:italic;display:block}
+.an-links{display:flex;align-items:center;gap:6px}
+.an-links a{position:relative;font-family:var(--an-ui-font);font-size:.96rem;color:#ffffff;text-decoration:none;padding:8px 4px;margin:0 8px;border-bottom:2px solid transparent;transition:border-color .15s,color .15s}
+.an-links a:hover{border-bottom-color:var(--an-gold)}
+.an-scrollbar{position:absolute;left:0;bottom:-4px;width:100%;height:2px;pointer-events:none}
+.an-scrollbar span{display:block;height:100%;background:var(--an-gold);transform:scaleX(0);transform-origin:left}
+
+/* mdBook's own menu-bar sits directly under our header; restyle it
+   to match rather than replace it, so its buttons keep working */
+#mdbook-menu-bar{background:#ffffff;border-bottom:1px solid var(--an-line)}
+#mdbook-menu-bar.sticky{top:64px}
+.menu-title{font-family:var(--an-font);font-weight:700;color:var(--an-maroon)}
+.icon-button{color:var(--an-muted)}
+.icon-button:hover{color:var(--an-maroon)}
+
+/* ---------- sidebar (chapter list, from SUMMARY.md) ---------- */
+#mdbook-sidebar{border-right:1px solid var(--an-line)}
+.sidebar-scrollbox{padding:22px 14px}
+.chapter{font-size:1.392rem}
+.chapter-item{margin:2px 0}
+.chapter li > a.active{background:var(--an-soft);color:var(--an-maroon-2);font-weight:700;box-shadow:inset 3px 0 0 var(--an-maroon)}
+.chapter li a{padding:7px 10px}
+.chapter li a:hover{background:var(--an-bg-alt)}
+.chapter-item strong{color:var(--an-maroon);font-weight:700;margin-right:6px}
+
+/* ---------- headings: mdBook wraps the whole heading text in
+   <a class="header">; make it read as plain text, with a "#"
+   affordance on hover instead of an underlined heading ---------- */
+#mdbook-content h1, #mdbook-content h2, #mdbook-content h3,
+#mdbook-content h4, #mdbook-content h5, #mdbook-content h6{
+  scroll-margin-top: 96px;
+}
+#mdbook-content h1 a.header, #mdbook-content h2 a.header, #mdbook-content h3 a.header,
+#mdbook-content h4 a.header, #mdbook-content h5 a.header, #mdbook-content h6 a.header{
+  color: inherit; text-decoration: none;
+}
+#mdbook-content h1 a.header::after, #mdbook-content h2 a.header::after, #mdbook-content h3 a.header::after,
+#mdbook-content h4 a.header::after, #mdbook-content h5 a.header::after, #mdbook-content h6 a.header::after{
+  content:"#"; margin-left:9px; opacity:0; color:var(--an-trace); font-weight:600; transition:opacity .15s,color .15s;
+}
+#mdbook-content h1:hover a.header::after, #mdbook-content h2:hover a.header::after, #mdbook-content h3:hover a.header::after,
+#mdbook-content h4:hover a.header::after, #mdbook-content h5:hover a.header::after, #mdbook-content h6:hover a.header::after{
+  opacity:1;
+}
+#mdbook-content h1{font-weight:700;font-size:clamp(2.4rem,3.2vw,3.2rem);line-height:1.15;letter-spacing:0;color:var(--an-maroon);padding-bottom:.45em;border-bottom:1px solid var(--an-line)}
+#mdbook-content h2{font-weight:700;font-size:1.8rem;letter-spacing:0;color:var(--an-maroon);padding-bottom:.35em;border-bottom:1px solid var(--an-line)}
+#mdbook-content h3{font-weight:700;font-size:1.44rem;color:var(--an-maroon-2)}
+#mdbook-content h4{font-family:var(--an-ui-font);font-size:1.04rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--an-maroon)}
+#mdbook-content p{line-height:1.7;font-size:1.28rem}
+#mdbook-content li{line-height:1.65;font-size:1.28rem}
+#mdbook-content li::marker{color:var(--an-maroon);font-weight:600}
+#mdbook-content strong{color:var(--an-ink)}
+
+/* ---------- code blocks: caption bar injected by asic-network.js ---------- */
+.an-codeblock{margin:1.5em 0;border:1px solid var(--an-line);overflow:hidden;background:#fff}
+.an-codeblock figcaption{display:flex;align-items:center;gap:9px;padding:9px 14px;background:var(--an-soft);border-bottom:1px solid var(--an-trace)}
+.an-codeblock .an-dot{width:7px;height:7px;border-radius:50%;background:var(--an-maroon);flex:none}
+.an-codeblock .an-lang{font-family:var(--an-ui-font);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--an-maroon)}
+.an-codeblock pre{position:relative;margin:0;border:0;border-radius:0;background:#fdfcfa}
+.an-codeblock pre code{font-size:1.02rem;line-height:1.65}
+/* mdBook's copy button is normally hover-to-reveal on the <pre> itself;
+   make it always visible since our caption bar sits above, not over, the code */
+.an-codeblock pre > .buttons{visibility:visible;opacity:1;top:8px;right:8px}
+
+/* ---------- tables ---------- */
+.table-wrapper{border:1px solid var(--an-line);overflow:hidden}
+#mdbook-content table{font-size:1.04rem}
+#mdbook-content th{font-family:var(--an-ui-font);color:#fff;font-size:.8rem;font-weight:400;letter-spacing:.04em;text-transform:none}
+
+/* ---------- right-hand "On this page" TOC (built by asic-network.js) ---------- */
+.an-layout{display:flex;align-items:flex-start;gap:clamp(24px,3.5vw,44px)}
+.an-layout > #mdbook-content{flex:1 1 auto;min-width:0}
+.an-toc{flex:0 0 196px;position:sticky;top:calc(var(--menu-bar-height) + 88px);align-self:start;max-height:calc(100vh - 140px);overflow:auto}
+.an-toc h3{font-family:var(--an-ui-font);font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--an-muted);margin:0 0 14px}
+#an-toc-nav{display:flex;flex-direction:column;gap:2px;border-left:1.5px solid var(--an-line)}
+#an-toc-nav a{display:block;font-family:var(--an-ui-font);font-size:.88rem;color:var(--an-muted);text-decoration:none;padding:4px 0 4px 14px;margin-left:-1.5px;border-left:1.5px solid transparent;line-height:1.4;transition:color .14s,border-color .14s}
+#an-toc-nav a.an-t-h3{padding-left:26px;font-size:.84rem}
+#an-toc-nav a:hover{color:var(--an-ink)}
+#an-toc-nav a.active{color:var(--an-maroon);font-weight:700;border-left-color:var(--an-maroon)}
+
+@media (max-width: 1120px){
+  .an-toc{display:none}
+}
+
+/* ---------- footer (appended by asic-network.js) ---------- */
+.an-footer{border-top:1px solid var(--an-line);padding:22px 0;background:var(--an-bg);margin-top:60px}
+.an-footer .an-row{height:auto;flex-wrap:wrap}
+.an-footer .an-wm{font-size:1.04rem;color:var(--an-maroon);font-weight:700}
+.an-footer .an-tag{font-family:var(--an-ui-font);font-size:.8rem;font-style:italic;color:var(--an-muted)}
+.an-footer a{margin-left:auto;color:var(--an-muted);text-decoration:none;font-family:var(--an-ui-font);font-size:.82rem;transition:color .14s}
+.an-footer a:hover{color:var(--an-maroon)}
+
+@media (prefers-reduced-motion: reduce){
+  .an-chip{transition:none}
+}
