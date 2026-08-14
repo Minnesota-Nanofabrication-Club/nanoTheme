@@ -112,8 +112,8 @@
     var repo = repoLink ? repoLink.getAttribute("href") : "";
     footer.innerHTML =
       '<div class="an-row">' +
-      '<span class="an-wm">ASIC NETWORK</span>' +
-      '<span class="an-tag">// silicon is a team sport</span>' +
+      '<span class="an-wm">Nano Fab Club</span>' +
+      '<span class="an-tag">// come curious</span>' +
       (repo
         ? '<a href="' + repo + '" target="_blank" rel="noopener">Contribute on GitHub ↗</a>'
         : "") +
