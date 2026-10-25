@@ -192,8 +192,6 @@ ul#mdbook-searchresults a { color: var(--nf-ink); }
 
 /* ---------- type ---------- */
 #mdbook-content main { font-size: 1.65rem; }
-.nf-eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 18px; padding: 5px 11px 5px 10px; border: 1px solid var(--nf-line-2); font-family: var(--nf-mono); font-size: 1.1rem; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase; color: var(--nf-muted); }
-.nf-eyebrow::before { content: ""; width: 9px; height: 9px; background: linear-gradient(var(--nf-uv), var(--nf-uv)) center / 1px 100% no-repeat, linear-gradient(var(--nf-uv), var(--nf-uv)) center / 100% 1px no-repeat; }
 #mdbook-content h1, #mdbook-content h2, #mdbook-content h3, #mdbook-content h4 { font-family: var(--nf-sans); color: var(--nf-ink); scroll-margin-top: calc(var(--nf-header-h) + var(--menu-bar-height) + 20px); }
 #mdbook-content :is(h1, h2, h3, h4) a.header { color: inherit; text-decoration: none; }
 #mdbook-content h1 { margin: 0 0 .5em; font-size: clamp(3.6rem, 4.4vw, 5.2rem); font-weight: 300; line-height: 1.06; letter-spacing: -.03em; }

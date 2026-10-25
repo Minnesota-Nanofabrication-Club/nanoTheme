@@ -19,7 +19,7 @@ points, so it stays small and survives mdBook upgrades. It needs
 | `head.hbs` | Extra `<head>` content. |
 | `header.hbs` | The club header above mdBook's menu bar: Getting started, Safety, Contributing, and the link back to the club website (edit its address here if the website moves). |
 | `nanofab.css` | The whole reskin, loaded by `additional-css`. |
-| `nanofab.js` | Part name above each title, "On this page" outline, code captions, Previous / Next cards, edit link, footer, progress line. Loaded by `additional-js`. |
+| `nanofab.js` | "On this page" outline, code captions, Previous / Next cards, edit link, footer, progress line. Loaded by `additional-js`. |
 | `fonts/` | IBM Plex, self-hosted (SIL OFL). `fonts/fonts.css` replaces mdBook's default fonts. |
 | `favicon.png` | The club logo. |
 
