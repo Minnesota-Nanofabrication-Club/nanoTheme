@@ -17,7 +17,7 @@ points, so it stays small and survives mdBook upgrades. It needs
 | File | What it does |
 |---|---|
 | `head.hbs` | Extra `<head>` content. |
-| `header.hbs` | The club header above mdBook's menu bar. Holds the website links (edit them here if the website moves). |
+| `header.hbs` | The club header above mdBook's menu bar: Getting started, Safety, Contributing, and the link back to the club website (edit its address here if the website moves). |
 | `nanofab.css` | The whole reskin, loaded by `additional-css`. |
 | `nanofab.js` | Part name above each title, "On this page" outline, code captions, Previous / Next cards, edit link, footer, progress line. Loaded by `additional-js`. |
 | `fonts/` | IBM Plex, self-hosted (SIL OFL). `fonts/fonts.css` replaces mdBook's default fonts. |
@@ -32,9 +32,13 @@ and in the book's `book.toml`:
 [output.html]
 additional-css = ["theme/nanofab.css"]
 additional-js = ["theme/nanofab.js"]
-default-theme = "light"
-preferred-dark-theme = "light"
+default-theme = "light"         # light is the default...
+preferred-dark-theme = "light"  # ...even when the reader's system is dark
 ```
+
+Readers switch to dark mode with the sun/moon button in the menu bar; the
+choice is remembered. Dark mode is mdBook's `coal` theme class, restyled by
+the dark token block at the top of `nanofab.css`.
 
 Each book pins a theme commit and updates when it chooses:
 
