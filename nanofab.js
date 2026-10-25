@@ -3,7 +3,6 @@
    Loaded by additional-js in the book's book.toml. Without it the book
    still reads fine; these only add to it.
 
-     - the part name above each page title (from the sidebar)
      - the "On this page" outline on the right, following your scroll
      - a caption bar with the language on each code block
      - Previous / Next cards and an "Edit this page" link
@@ -44,23 +43,6 @@
     addEventListener('scroll', upd, { passive: true });
     addEventListener('resize', upd);
     upd();
-  }
-
-  // "Gen One Fab", "Basics"...: the part title above the current page
-  function eyebrow(main) {
-    var h1 = $('h1', main), here = sidebarLink(location.href);
-    if (!h1 || !here) return;
-    var li = here.closest('li.chapter-item');
-    while (li && li.parentElement && li.parentElement.closest('li.chapter-item')) li = li.parentElement.closest('li.chapter-item');
-    var part = null;
-    for (var n = li && li.previousElementSibling; n; n = n.previousElementSibling) {
-      if (n.classList.contains('part-title')) { part = n.textContent.trim(); break; }
-    }
-    if (!part) return;
-    var p = document.createElement('p');
-    p.className = 'nf-eyebrow';
-    p.textContent = part;
-    h1.parentNode.insertBefore(p, h1);
   }
 
   function outline(content, main) {
@@ -178,7 +160,6 @@
     var main = content && $('main', content);
     progress();
     if (main) {
-      eyebrow(main);
       outline(content, main);
       codeCaptions(main);
       pager(main);
