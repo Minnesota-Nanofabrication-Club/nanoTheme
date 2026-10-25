@@ -4,40 +4,41 @@
 
 ---
 
-# ASIC Network docs theme
+# Minnesota Nanofabrication docs theme
 
-The shared visual layer for every ASIC Network mdBook (tutorial-template,
-analog-tutorials, digital-tutorials, ...). It's layered on top of mdBook's
-default theme via sanctioned override points, not a fork of mdBook's own
-`index.hbs` — this is what keeps it small and upgrade-safe:
+The look of the club's mdBook documentation, kept apart from its content. It
+follows the club website: black and white, one UV accent from the logo, IBM
+Plex, hairlines, square corners.
 
-- `head.hbs` — extra `<head>` content (fonts, favicon)
-- `header.hbs` — the ASIC Network brand bar, spliced in above mdBook's own menu bar
-- `asic-network.css` — full reskin, loaded via `[output.html] additional-css`
-- `asic-network.js` — right-hand "on this page" TOC, footer, code-block
-  caption bars, scroll progress bar; loaded via `[output.html] additional-js`
+It layers on top of mdBook's default theme through mdBook's own override
+points, so it stays small and survives mdBook upgrades. It needs
+**mdBook 0.5.x** (it styles the `#mdbook-*` element ids that 0.5 introduced).
 
-## Using this in a book
+| File | What it does |
+|---|---|
+| `head.hbs` | Extra `<head>` content. |
+| `header.hbs` | The club header above mdBook's menu bar. Holds the website links (edit them here if the website moves). |
+| `nanofab.css` | The whole reskin, loaded by `additional-css`. |
+| `nanofab.js` | Part name above each title, "On this page" outline, code captions, Previous / Next cards, edit link, footer, progress line. Loaded by `additional-js`. |
+| `fonts/` | IBM Plex, self-hosted (SIL OFL). `fonts/fonts.css` replaces mdBook's default fonts. |
+| `favicon.png` | The club logo. |
 
-This repo is meant to be mounted as a git submodule at `theme/` in a book
-repo (mdBook's default theme location — no `book.toml` `theme` override
-needed):
+## Using it in a book
 
-```
-git submodule add <this-repo-url> theme
-```
+Mount it as a git submodule at `theme/` (mdBook's default theme location),
+and in the book's `book.toml`:
 
-Because it's a submodule, each book pins a specific commit of this theme
-and updates on its own schedule:
-
-```
-cd theme
-git checkout <ref>       # switch this book to a different theme version
-cd ..
-git add theme
-git commit -m "bump docs theme"
+```toml
+[output.html]
+additional-css = ["theme/nanofab.css"]
+additional-js = ["theme/nanofab.js"]
+default-theme = "light"
+preferred-dark-theme = "light"
 ```
 
-`additional-css`/`additional-js` paths in `book.toml` are resolved relative
-to the *book root*, not the theme directory, so they stay `theme/asic-network.css`
-/ `theme/asic-network.js` regardless of where this submodule is mounted.
+Each book pins a theme commit and updates when it chooses:
+
+```
+cd theme && git pull && cd ..
+git add theme && git commit -m "Update the docs theme"
+```

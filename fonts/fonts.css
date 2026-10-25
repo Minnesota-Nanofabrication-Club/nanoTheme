@@ -1,0 +1,7 @@
+/* IBM Plex, the club website's type, self-hosted (SIL OFL, see
+   IBM-Plex-OFL.txt). Because this file exists, mdBook uses it in place
+   of its default Open Sans / Source Code Pro and copies this folder.
+   The resource helper gives each file its fingerprinted name (mdBook 0.5). */
+@font-face { font-family: "IBM Plex Sans"; src: url('{{ resource "fonts/IBMPlexSans-Variable.woff2" }}') format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url('{{ resource "fonts/IBMPlexMono-Regular.woff2" }}') format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url('{{ resource "fonts/IBMPlexMono-Medium.woff2" }}') format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
