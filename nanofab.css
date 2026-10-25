@@ -9,10 +9,16 @@
    Other files: head.hbs (meta), header.hbs (the club header),
    fonts/fonts.css (IBM Plex), nanofab.js (outline, pager, footer).
 
+   Two modes: light (the default) and dark. mdBook puts the reader's
+   choice on <html> as a class: "light", or "coal" for dark (nanofab.js
+   turns the theme button into a light/dark switch). Every colour below
+   is a --nf-* token; the dark block near the top swaps them.
+
    mdBook sets :root { font-size: 62.5% }, so 1rem = 10px here.
    ===================================================================== */
 
-:root {
+/* html.<theme> outranks mdBook's own .light / .coal variable blocks */
+:root, html.light, html.rust, html.coal, html.navy, html.ayu {
   --nf-uv: #6d28d9;          /* on white: 7.1:1 */
   --nf-uv-bright: #a78bfa;   /* on black */
   --nf-black: #060607;
@@ -24,6 +30,11 @@
   --nf-paper-2: #fafaf9;
   --nf-line: rgba(13,13,14,.12);
   --nf-line-2: rgba(13,13,14,.26);
+  --nf-bg: #ffffff;
+  --nf-bar: rgba(255,255,255,.94);
+  --nf-hover: rgba(13,13,14,.035);
+  --nf-uv-line: rgba(109,40,217,.35);
+  --nf-mark: #ddd6fe;
 
   --nf-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --nf-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -39,19 +50,19 @@
   --menu-bar-height: 48px;
   --mono-font: var(--nf-mono);
   --code-font-size: 1.45rem;
-  --bg: #ffffff;
+  --bg: var(--nf-bg);
   --fg: var(--nf-text);
   --sidebar-bg: var(--nf-paper-2);
   --sidebar-fg: var(--nf-text);
   --sidebar-non-existant: var(--nf-faint);
   --sidebar-active: var(--nf-ink);
   --sidebar-spacer: var(--nf-line);
-  --scrollbar: #cfcfcc;
+  --scrollbar: var(--nf-line-2);
   --icons: var(--nf-muted);
   --icons-hover: var(--nf-ink);
   --links: var(--nf-uv);
   --inline-code-color: var(--nf-ink);
-  --theme-popup-bg: #fff;
+  --theme-popup-bg: var(--nf-bg);
   --theme-popup-border: var(--nf-line);
   --theme-hover: var(--nf-paper);
   --quote-bg: var(--nf-paper);
@@ -60,14 +71,33 @@
   --table-header-bg: var(--nf-paper);
   --table-alternate-bg: transparent;
   --searchbar-border-color: var(--nf-line-2);
-  --searchbar-bg: #fff;
+  --searchbar-bg: var(--nf-bg);
   --searchbar-fg: var(--nf-text);
   --searchbar-shadow-color: transparent;
   --searchresults-header-fg: var(--nf-muted);
   --searchresults-border-color: var(--nf-line);
   --searchresults-li-bg: var(--nf-paper);
-  --search-mark-bg: #ddd6fe;
+  --search-mark-bg: var(--nf-mark);
   --color-scheme: light;
+}
+
+/* dark: the same page, inverted. Accent lifts to the bright UV. */
+html.coal, html.navy, html.ayu {
+  --nf-uv: #a78bfa;          /* on near-black: 7.6:1 */
+  --nf-ink: #f4f4f2;
+  --nf-text: #d8d8d4;
+  --nf-muted: rgba(244,244,242,.68);
+  --nf-faint: rgba(244,244,242,.5);
+  --nf-paper: #18191b;
+  --nf-paper-2: #0f0f11;
+  --nf-line: rgba(244,244,242,.12);
+  --nf-line-2: rgba(244,244,242,.26);
+  --nf-bg: #0a0a0b;
+  --nf-bar: rgba(10,10,11,.92);
+  --nf-hover: rgba(244,244,242,.05);
+  --nf-uv-line: rgba(167,139,250,.4);
+  --nf-mark: #4c1d95;
+  --color-scheme: dark;
 }
 
 html, body { font-family: var(--nf-sans); color: var(--nf-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -76,11 +106,12 @@ body { font-size: 1.65rem; line-height: 1.7; letter-spacing: -.004em; }
 :focus-visible { outline: 2px solid var(--nf-uv); outline-offset: 2px; }
 code, pre, kbd { font-family: var(--nf-mono); }
 
-/* one light theme only: the picker is hidden */
-#mdbook-theme-toggle { display: none; }
+/* the theme button is a light/dark switch (nanofab.js); its menu is never shown */
+#mdbook-theme-list { display: none !important; }
+#mdbook-theme-toggle svg { width: 15px; height: 15px; }
 
 /* ---------- the club header (header.hbs) ---------- */
-.nf-header { position: sticky; top: 0; z-index: 120; margin-inline: calc(-1 * var(--page-padding)); background: var(--nf-black); color: #f4f4f2; }
+.nf-header { position: sticky; top: 0; z-index: 120; margin-inline: calc(-1 * var(--page-padding)); background: var(--nf-black); color: #f4f4f2; border-bottom: 1px solid rgba(244,244,242,.1); }
 .nf-row { display: flex; align-items: center; gap: 24px; height: var(--nf-header-h); padding: 0 20px; }
 .nf-brand { display: flex; align-items: center; gap: 12px; margin-right: auto; min-width: 0; color: #fff; text-decoration: none; }
 .nf-mark { flex: none; width: 34px; height: 34px; background: var(--nf-logo) center / contain no-repeat; }
@@ -90,18 +121,17 @@ code, pre, kbd { font-family: var(--nf-mono); }
 .nf-links { display: flex; align-items: center; gap: 4px; }
 .nf-links a { display: inline-flex; align-items: center; height: 36px; padding: 0 12px; font-size: 1.45rem; color: rgba(244,244,242,.78); text-decoration: none; transition: color .2s; }
 .nf-links a:hover { color: #fff; }
-.nf-links .nf-cta { margin-left: 8px; padding: 0 16px; background: #fff; color: var(--nf-ink); font-weight: 500; border: 1px solid #fff; transition: background-color .2s, border-color .2s; }
-.nf-links .nf-cta:hover { background: var(--nf-uv-bright); border-color: var(--nf-uv-bright); color: #000; }
+.nf-links .nf-cta { white-space: nowrap; margin-left: 10px; padding: 0 14px; border: 1px solid rgba(244,244,242,.4); color: #fff; transition: border-color .2s, background-color .2s; }
+.nf-links .nf-cta:hover { border-color: #fff; background: rgba(255,255,255,.06); }
 .nf-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; pointer-events: none; }
 .nf-progress span { display: block; height: 100%; background: var(--nf-uv-bright); transform: scaleX(0); transform-origin: 0 50%; }
 @media (max-width: 760px) {
   .nf-links a:not(.nf-cta) { display: none; }
-  .nf-long { display: none; }
   .nf-row { gap: 12px; padding: 0 14px; }
 }
 
 /* ---------- mdBook's menu bar, under the header ---------- */
-#mdbook-menu-bar { height: var(--menu-bar-height); background: rgba(255,255,255,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--nf-line); }
+#mdbook-menu-bar { height: var(--menu-bar-height); background: var(--nf-bar); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--nf-line); }
 #mdbook-menu-bar.sticky { top: var(--nf-header-h); }
 #mdbook-menu-bar.bordered { border-bottom-color: var(--nf-line); }
 .menu-title { display: none; }
@@ -118,7 +148,7 @@ code, pre, kbd { font-family: var(--nf-mono); }
 
 /* ---------- search ---------- */
 #mdbook-searchbar { border-radius: 0; border: 1px solid var(--nf-line-2); padding: 10px 14px; font-family: var(--nf-sans); font-size: 1.6rem; }
-#mdbook-searchbar:focus { outline: none; border-color: var(--nf-uv); box-shadow: 0 0 0 3px rgba(109,40,217,.14); }
+#mdbook-searchbar:focus { outline: none; border-color: var(--nf-uv); box-shadow: 0 0 0 3px var(--nf-uv-line); }
 .searchresults-header { font-family: var(--nf-mono); font-weight: 400; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; }
 ul#mdbook-searchresults li { border-radius: 0; }
 ul#mdbook-searchresults li.focus { background: var(--nf-paper); }
@@ -133,8 +163,8 @@ ul#mdbook-searchresults a { color: var(--nf-ink); }
 .chapter li.chapter-item { margin-block-start: 1px; }
 .chapter-link-wrapper { align-items: stretch; border-radius: 0; }
 .chapter li a { flex: 1 1 auto; padding: 6px 10px 6px 12px; color: var(--nf-muted); text-decoration: none; border-left: 2px solid transparent; transition: color .15s, background-color .15s; }
-.chapter li a:hover { color: var(--nf-ink); background: rgba(13,13,14,.035); }
-.chapter li a.active { color: var(--nf-ink); font-weight: 500; background: #fff; border-left-color: var(--nf-uv); }
+.chapter li a:hover { color: var(--nf-ink); background: var(--nf-hover); }
+.chapter li a.active { color: var(--nf-ink); font-weight: 500; background: var(--nf-bg); border-left-color: var(--nf-uv); }
 .chapter li a strong { display: none; }               /* no chapter numbers */
 .section { padding-inline-start: 14px; font-size: 1.38rem; }
 .chapter li.part-title { display: flex; align-items: center; gap: 9px; margin: 26px 0 8px; padding: 0 12px; font-family: var(--nf-mono); font-size: 1.1rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--nf-faint); }
@@ -179,7 +209,7 @@ ul#mdbook-searchresults a { color: var(--nf-ink); }
 #mdbook-content li + li { margin-top: .35em; }
 #mdbook-content ul > li::marker { color: var(--nf-uv); }
 #mdbook-content ol > li::marker { font-family: var(--nf-mono); font-size: .9em; color: var(--nf-muted); }
-#mdbook-content a:not(.header) { color: var(--nf-uv); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(109,40,217,.35); transition: text-decoration-color .15s; }
+#mdbook-content a:not(.header) { color: var(--nf-uv); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--nf-uv-line); transition: text-decoration-color .15s; }
 #mdbook-content a:not(.header):hover { text-decoration-color: var(--nf-uv); }
 #mdbook-content strong { font-weight: 600; color: var(--nf-ink); }
 #mdbook-content hr { margin: 2.6em 0; border: 0; border-top: 1px solid var(--nf-line); }
@@ -195,7 +225,7 @@ ul#mdbook-searchresults a { color: var(--nf-ink); }
 .nf-code pre { position: relative; margin: 0; padding: 14px 16px; border-radius: 0; background: transparent; }
 .nf-code pre code, .nf-code pre code.hljs { background: transparent; padding: 0; font-size: 1.4rem; line-height: 1.65; }
 #mdbook-content pre > .buttons { top: 6px; right: 6px; opacity: 1; visibility: visible; }
-#mdbook-content pre > .buttons button { border-radius: 0; border-color: var(--nf-line); background: #fff; color: var(--nf-muted); }
+#mdbook-content pre > .buttons button { border-radius: 0; border-color: var(--nf-line); background: var(--nf-bg); color: var(--nf-muted); }
 
 .table-wrapper { margin: 1.6em 0; border: 1px solid var(--nf-line); overflow-x: auto; }
 #mdbook-content table { width: 100%; margin: 0; border-collapse: collapse; font-size: 1.5rem; }
@@ -216,7 +246,7 @@ ul#mdbook-searchresults a { color: var(--nf-ink); }
 @media (max-width: 620px) { .nf-pager { grid-template-columns: 1fr; } .nf-pager .nf-next { grid-column: 1; } }
 
 /* ---------- footer (nanofab.js) ---------- */
-.nf-footer { margin: 96px calc(-1 * var(--page-padding)) 0; padding: 40px 20px 24px; background: var(--nf-black); color: rgba(244,244,242,.7); font-size: 1.4rem; }
+.nf-footer { margin: 96px calc(-1 * var(--page-padding)) 0; border-top: 1px solid rgba(244,244,242,.1); padding: 40px 20px 24px; background: var(--nf-black); color: rgba(244,244,242,.7); font-size: 1.4rem; }
 .nf-footer-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .nf-footer .nf-brand-text b { color: #fff; }
 .nf-footer nav { display: flex; gap: 6px 22px; flex-wrap: wrap; }
