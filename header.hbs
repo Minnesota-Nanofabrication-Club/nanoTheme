@@ -1,24 +1,25 @@
-<header class="an-nav">
-  <div class="an-row">
-    <a class="an-brand" href="https://asicnetwork.net">
-      <svg class="an-chip" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
-        <g class="an-pins">
-          <path d="M10 5V2M16 5V2M22 5V2M10 27v3M16 27v3M22 27v3M5 10H2M5 16H2M5 22H2M27 10h3M27 16h3M27 22h3"/>
-        </g>
-        <rect class="an-body" x="5" y="5" width="22" height="22" rx="4"/>
-        <rect class="an-core" x="11" y="11" width="10" height="10" rx="2"/>
-      </svg>
-      <span>
-        <span class="an-wm">ASIC NETWORK</span>
-        <span class="an-sub">{{ book_title }}</span>
+{{!--
+  The club header, spliced in above mdBook's own menu bar.
+
+  The links point at the club website. They are written out here (the
+  theme has no settings file), so if the website moves, change the three
+  URLs that start with the website address, and the Discord invite.
+--}}
+<header class="nf-header">
+  <div class="nf-row">
+    <a class="nf-brand" href="{{ path_to_root }}index.html">
+      <span class="nf-mark" aria-hidden="true"></span>
+      <span class="nf-brand-text">
+        <b>Minnesota Nanofabrication</b>
+        <small>Documentation</small>
       </span>
     </a>
-    <nav class="an-links">
-      <a href="https://asicnetwork.net">Home</a>
-      {{#if git_repository_url}}
-      <a href="{{ git_repository_url }}" target="_blank" rel="noopener">GitHub</a>
-      {{/if}}
+    <nav class="nf-links" aria-label="Club website">
+      <a href="https://beastr45.github.io/nanofab_web_staging/">Website</a>
+      <a href="https://beastr45.github.io/nanofab_web_staging/machines/">Machines</a>
+      <a href="https://beastr45.github.io/nanofab_web_staging/events/">Events</a>
+      <a class="nf-cta" href="https://discord.gg/G9T6bk84w" target="_blank" rel="noopener">Join<span class="nf-long">&nbsp;the club</span></a>
     </nav>
   </div>
-  <div class="an-scrollbar"><span id="an-progress"></span></div>
+  <div class="nf-progress" aria-hidden="true"><span id="nf-progress"></span></div>
 </header>
